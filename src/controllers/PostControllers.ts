@@ -41,3 +41,53 @@ export async function createPost(c: Context) {
         return sendResponse(c, 500, false, 'Failed to create post');
     }
 };
+
+export const updatePost = async (c: Context) => {
+    try {
+        const id = c.req.param('id');
+        if (!id) {
+            return sendResponse(c, 400, false, 'Post ID is required');
+        }
+
+        const body = await c.req.parseBody();
+        const parsedBody = postSchema.partial().parse(body); 
+
+        const post = await prisma.post.update({
+            where: { id: Number(id) },
+            data: parsedBody,
+        });
+
+        return sendResponse(c, 200, true, 'Post updated successfully', post);
+        
+    } catch (e: any) {
+        console.error(`Error updating post: ${e}`);
+        if (e instanceof z.ZodError) {
+            return sendResponse(c, 400, false, 'Validation error', e.errors);
+        }
+        if (e.code === 'P2025') {
+            return sendResponse(c, 404, false, 'Post not found');
+        }
+        return sendResponse(c, 500, false, 'Failed to update post');
+    }
+};
+
+export const deletePost = async (c: Context) => {
+    try {
+        const id = c.req.param('id');
+        if (!id) {
+            return sendResponse(c, 400, false, 'Post ID is required');
+        }
+
+        await prisma.post.delete({
+            where: { id: Number(id) },
+        });
+
+        return sendResponse(c, 200, true, 'Post deleted successfully');
+    } catch (e: any) {
+        console.error(`Error deleting post: ${e}`);
+        if (e.code === 'P2025') {
+            return sendResponse(c, 404, false, 'Post not found');
+        }
+        return sendResponse(c, 500, false, 'Failed to delete post');
+    }
+};
