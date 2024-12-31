@@ -1,9 +1,10 @@
-import { Hono } from 'hono'
-import { Routes } from './routes'
-
+import { Hono } from 'hono';
+import { PostRoutes } from './routes/post';
+import { FilmRoutes } from './routes/film';
 
 const app = new Hono().basePath('/api');
 
-app.route('/posts', Routes);
+app.route('/posts', PostRoutes);
+app.route('/films', FilmRoutes);
 
-export default app
+export default app;

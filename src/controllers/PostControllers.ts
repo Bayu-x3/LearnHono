@@ -58,7 +58,7 @@ export const updatePost = async (c: Context) => {
         });
 
         return sendResponse(c, 200, true, 'Post updated successfully', post);
-        
+
     } catch (e: any) {
         console.error(`Error updating post: ${e}`);
         if (e instanceof z.ZodError) {
@@ -74,7 +74,7 @@ export const updatePost = async (c: Context) => {
 export const deletePost = async (c: Context) => {
     try {
         const id = c.req.param('id');
-        if (!id) {
+        if (!id) {  
             return sendResponse(c, 400, false, 'Post ID is required');
         }
 
