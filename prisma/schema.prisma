@@ -16,3 +16,13 @@ model Post  {
 
   @@map("posts")
 }
+
+model Films {
+  id Int     @id @default(autoincrement())
+  title String @db.VarChar(255)
+  description String @db.Text
+  sinopsis String @db.Text
+  year Int
+
+  @@map("films")
+}
