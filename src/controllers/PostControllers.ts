@@ -68,7 +68,7 @@ export const updatePost = async (c: Context) => {
             return sendResponse(c, 404, false, 'Post not found');
         }
         return sendResponse(c, 500, false, 'Failed to update post');
-    }
+    }   
 };
 
 export const deletePost = async (c: Context) => {
