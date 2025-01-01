@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -33,6 +34,18 @@ async function main() {
         ],
     });
     console.log("Films seeded!");
+
+
+    const hashedPassword1 = await bcrypt.hash("password123", 10);
+    const hashedPassword2 = await bcrypt.hash("securepass456", 10);
+
+    await prisma.user.createMany({
+        data: [
+            { name: "Admin User", username: "admin", password: hashedPassword1, role: "Admin" },
+            { name: "Regular User", username: "user", password: hashedPassword2, role: "User" },
+        ],
+    });
+    console.log("Users seeded!");
 
     console.log("Seeding completed successfully!");
 }
