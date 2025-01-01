@@ -1,11 +1,13 @@
 import { Hono } from "hono";
+import { authMiddleware, roleMiddleware } from "../middlewares/authMiddleware";
 import { getPost, createPost, updatePost, deletePost } from "../controllers/PostControllers";
 
 const PostRoutes = new Hono();
+PostRoutes.use('*', authMiddleware);
 
-PostRoutes.get('/', (c) => getPost(c));
-PostRoutes.post('/', (c) => createPost(c));
-PostRoutes.put('/:id', (c) => updatePost(c));
-PostRoutes.delete('/:id', (c) => deletePost(c));
+PostRoutes.get('/',roleMiddleware('Admin'), getPost);
+PostRoutes.post('/', roleMiddleware('Admin'), createPost);
+PostRoutes.put('/:id', roleMiddleware('Admin'), updatePost); 
+PostRoutes.delete('/:id', roleMiddleware('Admin'), deletePost);
 
 export { PostRoutes };

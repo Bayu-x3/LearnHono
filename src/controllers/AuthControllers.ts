@@ -2,6 +2,7 @@ import { Context } from "hono";
 import * as jwt from "jsonwebtoken"
 import * as bcrypt from "bcryptjs";
 import prisma from "../../prisma/client";
+import { use } from "hono/jsx";
 
 const JWT_SECRET = 'bceb313112646bce60e1b84e4e9fbcb770545e4082663e535312757aaf732e7b'
 
@@ -36,7 +37,9 @@ export const register = async (c: Context) => {
 
 export const login = async (c: Context) => {
     try {
+        console.log("Raw request body:", await c.req.text());
         const { username, password } = await c.req.json();
+        console.log("Parsed request body:", { username, password });
 
         if (!username || !password) {
             return sendResponse(c, 400, false, "Username and password are required");
