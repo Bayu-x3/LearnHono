@@ -20,6 +20,7 @@ export const getPost = async (c: Context) => {
 const postSchema = z.object({
     title: z.string().min(1, 'Title is required'),
     content: z.string().min(1, 'Content is required'),
+    categoryId: z.coerce.number().min(1, 'CategoryID is required'),
 })
 
 export async function createPost(c: Context) {
