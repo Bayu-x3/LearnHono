@@ -7,12 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post  {
-  id Int @id @default(autoincrement())
-  title String @db.VarChar(255)
-  content String @db.Text
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(255)
+
+  posts Post[]
+
+  @@map("categories")
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  content     String   @db.Text
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id])
 
   @@map("posts")
 }
