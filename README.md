@@ -57,7 +57,7 @@ Visit [http://localhost:3000](http://localhost:3000) to view your API.
   ```
   Use Prisma Client to seed initial data.
 
-### 3. API Endpoints
+### 3. API Endpoints CRUD
 
 #### **Get Posts API**
 - Setup:
@@ -71,6 +71,14 @@ Visit [http://localhost:3000](http://localhost:3000) to view your API.
     ```sh
     bun add zod
     ```
+### 4. Authentication, Authorization & Middleware
+- Setup:
+  - Install jwt, bcrypt
+    ```sh
+    bun add jsonwebtoken
+    bun add bcryptjs
+    ```
+  - Make file authMiddleware & context for roleMiddleware
 
 ---
 
