@@ -75,7 +75,7 @@ Visit [http://localhost:3000](http://localhost:3000) to view your API.
 - Setup:
   - Install jwt, bcrypt
     ```sh
-    bun add jsonwebtoken
+    bun add -d @types/jsonwebtoken
     bun add bcryptjs
     ```
   - Make file authMiddleware & context for roleMiddleware
